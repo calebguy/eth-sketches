@@ -18,7 +18,7 @@ const io = new Server(httpServer, {
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("hellllllooo there");
+  res.send("hellllllooo update");
 });
 
 io.on("connection", (socket) => {
