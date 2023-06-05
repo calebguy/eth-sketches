@@ -10,11 +10,16 @@ const env = {
 const app = new koa();
 const router = new Router();
 
-router.get("/", async (ctx) => {
-  ctx.body = "Hello World";
+app.use(async (ctx, next) => {
+  console.log("Url:", ctx.url);
+  // passes request to the next middleware function
+  await next();
 });
-
 app.use(router.routes()).use(router.allowedMethods());
+
+router.get("/", async (ctx) => {
+  ctx.body = "Helloooooo";
+});
 
 app.listen(env.PORT, function () {
   console.log(`server is running oh yeah on port ${env.PORT}`);
