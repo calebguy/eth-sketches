@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: black;
-  }
-}
-
-body {
-  color: var(--bg-color);
+body, html {
+  background-color: #c9d0db;
 }
