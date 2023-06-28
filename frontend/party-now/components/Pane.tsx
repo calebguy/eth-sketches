@@ -1,11 +1,18 @@
 import clsx from "clsx";
 import { PropsWithChildren } from "react";
 
-interface PaneProps extends PropsWithChildren {}
+interface PaneProps extends PropsWithChildren {
+  block?: boolean;
+}
 
-const Pane: React.FC<PaneProps> = ({ children }) => {
+const Pane: React.FC<PaneProps> = ({ children, block }) => {
   return (
-    <div className={clsx("rounded-xl", "relative", "p-6")}>
+    <div
+      className={clsx("rounded-xl", "relative", "p-6", {
+        "w-full": block,
+        "inline-block": !block,
+      })}
+    >
       <div
         className={clsx(
           //   "bg-slate-200",

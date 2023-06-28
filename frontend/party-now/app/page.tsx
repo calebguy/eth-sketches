@@ -1,4 +1,5 @@
 import Pane from "@/components/Pane";
+import TodayParty from "@/components/TodayParty";
 import localFont from "@next/font/local";
 import clsx from "clsx";
 import Image from "next/image";
@@ -12,8 +13,7 @@ export default function Home() {
   return (
     <main
       className={clsx(
-        // "min-h-screen",
-        "h-[calc(100dvh)]",
+        "min-h-[calc(100dvh)]",
         "p-20",
         "font-sans",
         "bg-center",
@@ -33,7 +33,11 @@ export default function Home() {
           "justify-between",
           "relative",
           "z-10",
-          "h-full"
+          "h-full",
+          "max-w-xl",
+          "border-[1px]",
+          "border-red-400",
+          "mx-auto"
         )}
       >
         <Pane>
@@ -65,6 +69,7 @@ export default function Home() {
             </div>
           </div>
         </Pane>
+        <TodayParty />
         <Pane>
           <div
             className={clsx(
