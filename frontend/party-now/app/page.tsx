@@ -1,5 +1,5 @@
 import Pane from "@/components/Pane";
-import TodayParty from "@/components/TodayParty";
+import PartyExplorer from "@/components/PartyExplorer";
 import localFont from "@next/font/local";
 import clsx from "clsx";
 import Image from "next/image";
@@ -35,8 +35,6 @@ export default function Home() {
           "z-10",
           "h-full",
           "max-w-xl",
-          "border-[1px]",
-          "border-red-400",
           "mx-auto"
         )}
       >
@@ -69,7 +67,7 @@ export default function Home() {
             </div>
           </div>
         </Pane>
-        <TodayParty />
+        <PartyExplorer />
         <Pane>
           <div
             className={clsx(

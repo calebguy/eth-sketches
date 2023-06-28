@@ -4,16 +4,14 @@ import { getTopics } from "@/services/api";
 import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
+import { VscLoading } from "react-icons/vsc";
 import { useQuery } from "react-query";
 import Pane from "./Pane";
 
-const TodayParty = () => {
-  const query = useQuery("topics", getTopics);
+const PartyExplorer = () => {
+  const { data, isLoading } = useQuery("topics", getTopics);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const item = useMemo(
-    () => query?.data?.[selectedIndex],
-    [selectedIndex, query?.data]
-  );
+  const item = useMemo(() => data?.[selectedIndex], [selectedIndex, data]);
 
   const handlePageForward = () => {
     setSelectedIndex((prev) => prev + 1);
@@ -21,23 +19,42 @@ const TodayParty = () => {
   const handlePageBackward = () => {
     setSelectedIndex((prev) => prev - 1);
   };
-  const canPageForward = !query?.data
-    ? false
-    : selectedIndex < query.data.length - 1;
+  const canPageForward = !data ? false : selectedIndex < data.length - 1;
   const canPageBackward = selectedIndex > 0;
 
   return (
     <div className={clsx("w-full", "flex", "flex-col", "gap-4")}>
       <Pane block>
-        <div className={clsx("break-all", "flex", "flex-col", "gap-3")}>
-          {item && (
-            <div>
-              <div>Creator: {item.args.creator}</div>
-              <div>Topic: {item.args.crowdfund}</div>
-              <div>Party: {item.args.party}</div>
+        {!isLoading && (
+          <div className={clsx("break-all", "flex", "flex-col", "gap-3")}>
+            {item && (
+              <div>
+                <div>Creator: {item.args.creator}</div>
+                <div>Topic: {item.args.crowdfund}</div>
+                <div>Party: {item.args.party}</div>
+              </div>
+            )}
+          </div>
+        )}
+        {isLoading && (
+          <div
+            className={clsx(
+              "animate-pulse",
+              "bg-slate-300",
+              "p-4",
+              "rounded-lg",
+              "flex",
+              "justify-center",
+              "items-center"
+            )}
+          >
+            <div
+              className={clsx("animate-spin", "inline-block", "text-slate-400")}
+            >
+              <VscLoading size={24} />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </Pane>
       <div className={clsx("flex", "justify-center")}>
         <Pane>
@@ -87,4 +104,4 @@ const TodayParty = () => {
   );
 };
 
-export default TodayParty;
+export default PartyExplorer;

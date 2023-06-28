@@ -15,7 +15,6 @@ const Pane: React.FC<PaneProps> = ({ children, block }) => {
     >
       <div
         className={clsx(
-          //   "bg-slate-200",
           "bg-white",
           "opacity-90",
           "absolute",
