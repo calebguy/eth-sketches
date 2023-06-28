@@ -12,7 +12,8 @@ export default function Home() {
   return (
     <main
       className={clsx(
-        "min-h-screen",
+        // "min-h-screen",
+        "h-[calc(100dvh)]",
         "p-20",
         "font-sans",
         "bg-center",
