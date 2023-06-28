@@ -13,7 +13,7 @@ export default function Home() {
     <main
       className={clsx(
         "min-h-screen",
-        "p-24",
+        "p-20",
         "font-sans",
         "bg-center",
         "bg-cover",
@@ -36,19 +36,48 @@ export default function Home() {
         )}
       >
         <Pane>
-          <div className={clsx("flex", "items-center", "gap-2")}>
+          <div
+            className={clsx(
+              "flex",
+              "md:flex-row",
+              "flex-col",
+              "items-center",
+              "gap-2"
+            )}
+          >
             <Image
               width={64}
               height={47}
               alt={"pbidcursors"}
               src={"partybid_cursors.svg"}
             />
-            <div className={clsx("text-6xl", "font-bold", "text-sky-500")}>
+            <div
+              className={clsx(
+                "text-4xl",
+                "md:text-6xl",
+                "font-bold",
+                "text-black",
+                "break-words"
+              )}
+            >
               PartyNow
             </div>
           </div>
         </Pane>
-        <Pane>*not built by PartyDAO*</Pane>
+        <Pane>
+          <div
+            className={clsx(
+              "flex",
+              "items-center",
+              "text-center",
+              "leading-tight",
+              "text-slate-600",
+              "font-bold"
+            )}
+          >
+            Who{"'"}s throwing a party?
+          </div>
+        </Pane>
       </div>
       <div
         className={clsx(
