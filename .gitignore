@@ -7,3 +7,6 @@ dist
 cache
 lib
 out
+
+doc/
+design/
