@@ -27,32 +27,30 @@ const PartyExplorer = () => {
 
   return (
     <div className={clsx("w-full", "flex", "flex-col", "gap-4")}>
-      <Pane block>
-        {!isLoading && (
-          <div className={clsx("break-all", "flex", "flex-col", "gap-3")}>
-            {item && <Party event={item} />}
-          </div>
-        )}
-        {isLoading && (
+      {!isLoading && (
+        <div className={clsx("break-all", "flex", "flex-col", "gap-3")}>
+          {item && <Party event={item} />}
+        </div>
+      )}
+      {isLoading && (
+        <div
+          className={clsx(
+            "animate-pulse",
+            "bg-slate-300",
+            "p-4",
+            "rounded-lg",
+            "flex",
+            "justify-center",
+            "items-center"
+          )}
+        >
           <div
-            className={clsx(
-              "animate-pulse",
-              "bg-slate-300",
-              "p-4",
-              "rounded-lg",
-              "flex",
-              "justify-center",
-              "items-center"
-            )}
+            className={clsx("animate-spin", "inline-block", "text-slate-400")}
           >
-            <div
-              className={clsx("animate-spin", "inline-block", "text-slate-400")}
-            >
-              <VscLoading size={24} />
-            </div>
+            <VscLoading size={24} />
           </div>
-        )}
-      </Pane>
+        </div>
+      )}
       <div className={clsx("flex", "justify-center")}>
         <Pane>
           <div className={clsx("flex", "justify-between", "gap-6")}>
@@ -126,9 +124,6 @@ const Party: React.FC<PartyProps> = ({ event }) => {
           </Link>
         </div>
       )}
-      <div className={clsx("text-right", "text-slate-400")}>
-        {event.args.partyOpts.name}
-      </div>
     </div>
   );
 };
