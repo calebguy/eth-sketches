@@ -7,7 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { PropsWithChildren, useMemo, useState } from "react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
-import { VscLoading } from "react-icons/vsc";
 import { useQuery } from "react-query";
 import Pane from "./Pane";
 
@@ -35,19 +34,17 @@ const PartyExplorer = () => {
         <div
           className={clsx(
             "animate-pulse",
-            "bg-slate-300",
-            "p-4",
-            "rounded-lg",
             "flex",
             "justify-center",
             "items-center"
           )}
         >
-          <div
-            className={clsx("animate-spin", "inline-block", "text-slate-400")}
-          >
-            <VscLoading size={24} />
-          </div>
+          <Image
+            src={"card-loader.svg"}
+            alt={"party-loading"}
+            width={346}
+            height={520}
+          />
         </div>
       )}
       <div className={clsx("flex", "justify-center", "mt-4")}>
