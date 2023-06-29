@@ -1,8 +1,9 @@
 "use client";
 
 import { getTopics } from "@/services/api";
+import { EventData } from "@/services/interfaces";
 import clsx from "clsx";
-import { useMemo, useState } from "react";
+import { PropsWithChildren, useMemo, useState } from "react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import { VscLoading } from "react-icons/vsc";
 import { useQuery } from "react-query";
@@ -27,13 +28,7 @@ const PartyExplorer = () => {
       <Pane block>
         {!isLoading && (
           <div className={clsx("break-all", "flex", "flex-col", "gap-3")}>
-            {item && (
-              <div>
-                <div>Creator: {item.args.creator}</div>
-                <div>Topic: {item.args.crowdfund}</div>
-                <div>Party: {item.args.party}</div>
-              </div>
-            )}
+            {item && <Party event={item} />}
           </div>
         )}
         {isLoading && (
@@ -100,6 +95,46 @@ const PartyExplorer = () => {
           </div>
         </Pane>
       </div>
+    </div>
+  );
+};
+
+interface PartyProps extends PropsWithChildren {
+  event: EventData;
+}
+
+const Party: React.FC<PartyProps> = ({ event }) => {
+  return (
+    <div>
+      <Title title={"Event"}>{event.eventName}</Title>
+      <Title title={"Creator"}>{event.args.creator}</Title>
+      <Title title={"Topic"}>{event.args.crowdfund}</Title>
+      <Title title={"Party Address"}>{event.args.party}</Title>
+      <Title title={"Party Name"}>{event.args.partyOpts.name}</Title>
+      <Title title={"Party Symbol"}>{event.args.partyOpts.symbol}</Title>
+
+      <div className={clsx("mt-1")}>
+        <Title title={"Hosts"}>
+          {event.args.partyOpts.governanceOpts.hosts.map((host) => (
+            <div key={host}>{host}</div>
+          ))}
+        </Title>
+      </div>
+
+      {/* <div className={clsx("mt-2")}>{JSON.stringify(event, undefined, 2)}</div> */}
+    </div>
+  );
+};
+
+interface TitleProps extends PropsWithChildren {
+  title: string;
+}
+
+const Title: React.FC<TitleProps> = ({ title, children }) => {
+  return (
+    <div className={clsx("flex", "flex-col")}>
+      <span className={clsx("text-slate-500")}>{title}:</span>
+      <span>{children}</span>
     </div>
   );
 };
