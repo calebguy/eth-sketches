@@ -17,6 +17,8 @@ export async function GET(request: Request) {
     address: PARTY_CROWDFUND_FACTORY_ADDRESS,
     fromBlock: BigInt(PARTY_DEPLOY_BLOCK),
   });
+  // view in reverse chron
+  logs.reverse();
   const topics = [];
   for (const log of logs) {
     topics.push(

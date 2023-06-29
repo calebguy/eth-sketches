@@ -1,8 +1,6 @@
-import Pane from "@/components/Pane";
 import PartyExplorer from "@/components/PartyExplorer";
-import localFont from "@next/font/local";
 import clsx from "clsx";
-import Image from "next/image";
+import localFont from "next/font/local";
 
 const forza = localFont({
   src: "../public/Forza-Medium.woff2",
@@ -39,35 +37,6 @@ export default function Home() {
           "mx-auto"
         )}
       >
-        <Pane>
-          <div
-            className={clsx(
-              "flex",
-              "md:flex-row",
-              "flex-col",
-              "items-center",
-              "gap-2"
-            )}
-          >
-            <Image
-              width={64}
-              height={47}
-              alt={"pbidcursors"}
-              src={"partybid_cursors.svg"}
-            />
-            <div
-              className={clsx(
-                "text-4xl",
-                "md:text-6xl",
-                "font-bold",
-                "text-black",
-                "break-words"
-              )}
-            >
-              PartyNow
-            </div>
-          </div>
-        </Pane>
         <div className={clsx("grow", "flex", "flex-col", "justify-center")}>
           <PartyExplorer />
         </div>

@@ -51,7 +51,7 @@ const PartyExplorer = () => {
           </div>
         </div>
       )}
-      <div className={clsx("flex", "justify-center")}>
+      <div className={clsx("flex", "justify-center", "mt-4")}>
         <Pane>
           <div className={clsx("flex", "justify-between", "gap-6")}>
             <button
@@ -110,9 +110,17 @@ const Party: React.FC<PartyProps> = ({ event }) => {
   );
   return (
     <div>
-      {isLoading && <CardLoader />}
-      {!isLoading && data && (
-        <div className={clsx("flex", "justify-center")}>
+      <div className={clsx("flex", "justify-center", "animate-spin-3d")}>
+        {isLoading && !data && (
+          <Image
+            src={"card-loader.svg"}
+            alt={"card-loader"}
+            width={346}
+            height={520}
+            className={clsx("hover:scale-105", "active:scale-100")}
+          />
+        )}
+        {!isLoading && data && (
           <Link href={data.external_url} target="_blank">
             <Image
               src={data.image}
@@ -122,88 +130,8 @@ const Party: React.FC<PartyProps> = ({ event }) => {
               className={clsx("hover:scale-105", "active:scale-100")}
             />
           </Link>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const CardLoader = () => {
-  return (
-    <div
-      className={clsx(
-        "h-[330px]",
-        "w-[220px]",
-        "animate-pulse",
-        "bg-slate-200",
-        "mx-auto",
-        "rounded-3xl",
-        "mt-1",
-        "p-2.5",
-        "flex",
-        "flex-col",
-        "justify-between"
-      )}
-    >
-      <div className={clsx("flex", "justify-between")}>
-        <div
-          className={clsx(
-            "bg-slate-100",
-            "animate-pulse",
-            "rounded-full",
-            "w-[90px]",
-            "h-[90px]"
-          )}
-        />
-        <div
-          className={clsx(
-            "justify-between",
-            "flex",
-            "flex-col",
-            "items-end",
-            "gap-2"
-          )}
-        >
-          <div
-            className={clsx(
-              "bg-slate-100",
-              "animate-pulse",
-              "rounded-xl",
-              "h-[14px]",
-              "w-[80px]"
-            )}
-          />
-          <div className={clsx("flex", "flex-col", "gap-1", "items-center")}>
-            <div
-              className={clsx(
-                "bg-slate-100",
-                "animate-pulse",
-                "rounded-full",
-                "h-[35px]",
-                "w-[45px]"
-              )}
-            />
-            <div
-              className={clsx(
-                "bg-slate-100",
-                "animate-pulse",
-                "rounded-xl",
-                "h-[18px]",
-                "w-[40px]"
-              )}
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        className={clsx(
-          "bg-slate-100",
-          "h-[210px]",
-          "w-full",
-          "rounded-xl",
-          "shrink-0"
         )}
-      />
+      </div>
     </div>
   );
 };
