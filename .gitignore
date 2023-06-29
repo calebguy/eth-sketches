@@ -5,8 +5,9 @@ dist
 
 # foundry
 cache
-lib
+chain/foundry/lib
 out
 
 doc/
 design/
+playground/

@@ -1,8 +1,10 @@
 "use client";
 
-import { getTopics } from "@/services/api";
-import { EventData } from "@/services/interfaces";
+import { getMetadata, getTopics } from "@/lib/api";
+import { EventData } from "@/lib/interfaces";
 import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
 import { PropsWithChildren, useMemo, useState } from "react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import { VscLoading } from "react-icons/vsc";
@@ -10,8 +12,8 @@ import { useQuery } from "react-query";
 import Pane from "./Pane";
 
 const PartyExplorer = () => {
-  const { data, isLoading } = useQuery("topics", getTopics);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { data, isLoading } = useQuery("topics", getTopics);
   const item = useMemo(() => data?.[selectedIndex], [selectedIndex, data]);
 
   const handlePageForward = () => {
@@ -104,37 +106,109 @@ interface PartyProps extends PropsWithChildren {
 }
 
 const Party: React.FC<PartyProps> = ({ event }) => {
+  const { data, isLoading, error } = useQuery(
+    ["metadata", event.args.party],
+    () => getMetadata(event.args.party)
+  );
   return (
     <div>
-      <Title title={"Event"}>{event.eventName}</Title>
-      <Title title={"Creator"}>{event.args.creator}</Title>
-      <Title title={"Topic"}>{event.args.crowdfund}</Title>
-      <Title title={"Party Address"}>{event.args.party}</Title>
-      <Title title={"Party Name"}>{event.args.partyOpts.name}</Title>
-      <Title title={"Party Symbol"}>{event.args.partyOpts.symbol}</Title>
-
-      <div className={clsx("mt-1")}>
-        <Title title={"Hosts"}>
-          {event.args.partyOpts.governanceOpts.hosts.map((host) => (
-            <div key={host}>{host}</div>
-          ))}
-        </Title>
+      {isLoading && <CardLoader />}
+      {!isLoading && data && (
+        <div className={clsx("flex", "justify-center")}>
+          <Link href={data.external_url} target="_blank">
+            <Image
+              src={data.image}
+              alt={"Card"}
+              width={346}
+              height={520}
+              className={clsx("hover:scale-105", "active:scale-100")}
+            />
+          </Link>
+        </div>
+      )}
+      <div className={clsx("text-right", "text-slate-400")}>
+        {event.args.partyOpts.name}
       </div>
-
-      {/* <div className={clsx("mt-2")}>{JSON.stringify(event, undefined, 2)}</div> */}
     </div>
   );
 };
 
-interface TitleProps extends PropsWithChildren {
-  title: string;
-}
-
-const Title: React.FC<TitleProps> = ({ title, children }) => {
+const CardLoader = () => {
   return (
-    <div className={clsx("flex", "flex-col")}>
-      <span className={clsx("text-slate-500")}>{title}:</span>
-      <span>{children}</span>
+    <div
+      className={clsx(
+        "h-[330px]",
+        "w-[220px]",
+        "animate-pulse",
+        "bg-slate-200",
+        "mx-auto",
+        "rounded-3xl",
+        "mt-1",
+        "p-2.5",
+        "flex",
+        "flex-col",
+        "justify-between"
+      )}
+    >
+      <div className={clsx("flex", "justify-between")}>
+        <div
+          className={clsx(
+            "bg-slate-100",
+            "animate-pulse",
+            "rounded-full",
+            "w-[90px]",
+            "h-[90px]"
+          )}
+        />
+        <div
+          className={clsx(
+            "justify-between",
+            "flex",
+            "flex-col",
+            "items-end",
+            "gap-2"
+          )}
+        >
+          <div
+            className={clsx(
+              "bg-slate-100",
+              "animate-pulse",
+              "rounded-xl",
+              "h-[14px]",
+              "w-[80px]"
+            )}
+          />
+          <div className={clsx("flex", "flex-col", "gap-1", "items-center")}>
+            <div
+              className={clsx(
+                "bg-slate-100",
+                "animate-pulse",
+                "rounded-full",
+                "h-[35px]",
+                "w-[45px]"
+              )}
+            />
+            <div
+              className={clsx(
+                "bg-slate-100",
+                "animate-pulse",
+                "rounded-xl",
+                "h-[18px]",
+                "w-[40px]"
+              )}
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className={clsx(
+          "bg-slate-100",
+          "h-[210px]",
+          "w-full",
+          "rounded-xl",
+          "shrink-0"
+        )}
+      />
     </div>
   );
 };

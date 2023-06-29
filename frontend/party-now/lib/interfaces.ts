@@ -53,3 +53,11 @@ export type EventData = {
     rageQuitTimestamp: number;
   };
 };
+
+export interface Metadata {
+  name: string;
+  description: string;
+  external_url: string;
+  attributes: Array<any>;
+  image: string;
+}

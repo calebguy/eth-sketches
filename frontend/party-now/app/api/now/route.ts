@@ -1,5 +1,9 @@
-import crowdfundFactoryAbi from "@/services/abis/crowdfund_factory";
-import { eth } from "@/services/chain";
+import crowdfundFactoryAbi from "@/lib/abis/crowdfund_factory";
+import { eth } from "@/lib/chain";
+import {
+  PARTY_CROWDFUND_FACTORY_ADDRESS,
+  PARTY_DEPLOY_BLOCK,
+} from "@/lib/constants";
 import { NextResponse } from "next/server";
 import { decodeEventLog } from "viem";
 
@@ -7,10 +11,6 @@ import { decodeEventLog } from "viem";
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
-
-const PARTY_CROWDFUND_FACTORY_ADDRESS =
-  "0x2e8920950677f8545b4ef80315f48e161cb02d1c";
-const PARTY_DEPLOY_BLOCK = 17480014;
 
 export async function GET(request: Request) {
   const logs = await eth.getLogs({
