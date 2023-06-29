@@ -46,7 +46,7 @@ export default function Home() {
           "absolute",
           "inset-0",
           "bg-slate-400",
-          "opacity-50",
+          "opacity-80",
           "z-0"
         )}
       />

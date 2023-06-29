@@ -112,13 +112,15 @@ const Party: React.FC<PartyProps> = ({ event }) => {
     <div>
       <div className={clsx("flex", "justify-center", "animate-spin-3d")}>
         {isLoading && !data && (
-          <Image
-            src={"card-loader.svg"}
-            alt={"card-loader"}
-            width={346}
-            height={520}
-            className={clsx("hover:scale-105", "active:scale-100")}
-          />
+          <div className={clsx("animate-pulse")}>
+            <Image
+              src={"card-loader.svg"}
+              alt={"card-loader"}
+              width={346}
+              height={520}
+              className={clsx("hover:scale-105", "active:scale-100")}
+            />
+          </div>
         )}
         {!isLoading && data && (
           <Link href={data.external_url} target="_blank">
