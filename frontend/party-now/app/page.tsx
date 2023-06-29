@@ -68,21 +68,9 @@ export default function Home() {
             </div>
           </div>
         </Pane>
-        <PartyExplorer />
-        <Pane>
-          <div
-            className={clsx(
-              "flex",
-              "items-center",
-              "text-center",
-              "leading-tight",
-              "text-slate-600",
-              "font-bold"
-            )}
-          >
-            Who{"'"}s throwing a party?
-          </div>
-        </Pane>
+        <div className={clsx("grow", "flex", "flex-col", "justify-center")}>
+          <PartyExplorer />
+        </div>
       </div>
       <div
         className={clsx(
