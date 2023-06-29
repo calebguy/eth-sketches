@@ -1,13 +1,7 @@
-import { EventData, Metadata } from "./interfaces";
+import { GetNowResponse } from "./interfaces";
 
-export const getTopics = async (): Promise<EventData[]> => {
+export const getTopics = async (): Promise<GetNowResponse> => {
   const res = await fetch("/api/now");
-  const { topics } = await res.json();
-  return topics;
-};
-
-export const getMetadata = async (address: string): Promise<Metadata> => {
-  const res = await fetch(`/api/token/${address}`);
-  const { metadata } = await res.json();
-  return metadata;
+  const { data } = await res.json();
+  return data;
 };

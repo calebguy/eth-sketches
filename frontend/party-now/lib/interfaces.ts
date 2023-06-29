@@ -44,7 +44,7 @@ export type EventData = {
   args: {
     creator: string;
     crowdfund: string;
-    party: string;
+    party: `0x${string}`;
     crowdfundOpts: CrowdfundOptions;
     partyOpts: PartyOptions;
     proposalEngineOpts: ProposalEngineOptions;
@@ -61,3 +61,6 @@ export interface Metadata {
   attributes: Array<any>;
   image: string;
 }
+
+export type Party = { topic: EventData; metadata?: Metadata };
+export type GetNowResponse = Array<Party>;

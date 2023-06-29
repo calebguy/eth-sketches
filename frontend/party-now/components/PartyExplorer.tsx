@@ -1,7 +1,7 @@
 "use client";
 
-import { getMetadata, getTopics } from "@/lib/api";
-import { EventData } from "@/lib/interfaces";
+import { getTopics } from "@/lib/api";
+import { Party } from "@/lib/interfaces";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,8 +14,7 @@ import Pane from "./Pane";
 const PartyExplorer = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { data, isLoading } = useQuery("topics", getTopics);
-  const item = useMemo(() => data?.[selectedIndex], [selectedIndex, data]);
-
+  const party = useMemo(() => data?.[selectedIndex], [selectedIndex, data]);
   const handlePageForward = () => {
     setSelectedIndex((prev) => prev + 1);
   };
@@ -29,7 +28,7 @@ const PartyExplorer = () => {
     <div className={clsx("w-full", "flex", "flex-col", "gap-4")}>
       {!isLoading && (
         <div className={clsx("break-all", "flex", "flex-col", "gap-3")}>
-          {item && <Party event={item} />}
+          {party && <Party party={party} />}
         </div>
       )}
       {isLoading && (
@@ -100,40 +99,32 @@ const PartyExplorer = () => {
 };
 
 interface PartyProps extends PropsWithChildren {
-  event: EventData;
+  party: Party;
 }
 
-const Party: React.FC<PartyProps> = ({ event }) => {
-  const { data, isLoading, error } = useQuery(
-    ["metadata", event.args.party],
-    () => getMetadata(event.args.party)
-  );
+const Party: React.FC<PartyProps> = ({ party }) => {
   return (
     <div>
       <div className={clsx("flex", "justify-center", "animate-spin-3d")}>
-        {isLoading && !data && (
-          <div className={clsx("animate-pulse")}>
-            <Image
-              src={"card-loader.svg"}
-              alt={"card-loader"}
-              width={346}
-              height={520}
-              className={clsx("hover:scale-105", "active:scale-100")}
-            />
-          </div>
-        )}
-        {!isLoading && data && (
-          <Link href={data.external_url} target="_blank">
-            <Image
-              src={data.image}
-              alt={"Card"}
-              width={346}
-              height={520}
-              className={clsx("hover:scale-105", "active:scale-100")}
-            />
-          </Link>
-        )}
+        <Link
+          href={`https://party.app/party/${party.topic.args.party}`}
+          target="_blank"
+        >
+          <Image
+            src={party?.metadata?.image || "card-loader.svg"}
+            alt={"Card"}
+            width={346}
+            height={520}
+            className={clsx("hover:scale-105", "active:scale-100")}
+          />
+        </Link>
       </div>
+      <div
+        className={clsx("mt-8", "text-2xl", "text-center", "text-slate-600")}
+      >
+        {party.topic.args.partyOpts.name}
+      </div>
+      {/* <div>{JSON.stringify(party, undefined, 2)}</div> */}
     </div>
   );
 };
