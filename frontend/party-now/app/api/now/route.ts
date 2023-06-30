@@ -23,7 +23,7 @@ export async function GET(request: Request) {
   logs.reverse();
 
   const toReturn = [];
-  for (const log of logs.splice(0, 5)) {
+  for (const log of logs) {
     //@ts-ignore
     const topic: EventData = decodeEventLog({
       abi: crowdfundFactoryAbi,
@@ -40,10 +40,9 @@ export async function GET(request: Request) {
         functionName: "tokenURI",
         args: [1],
       });
-      console.log("URI", uri);
       data.metadata = JSON.parse(convertBase64ToString(uri as string));
     } catch (e) {
-      console.error("could not get party card");
+      console.error("could not get party card", topic.args.party);
     }
     toReturn.push(data);
   }
